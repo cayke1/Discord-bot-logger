@@ -5,7 +5,15 @@ export class SendLogController {
   constructor(private usecase: SendLogToDiscord) {}
 
   async handle(req: Request, res: Response): Promise<void> {
-    const { projectID, level = "info", message } = req.body;
+    const {
+      projectID,
+      level = "info",
+      message,
+      timestamp,
+      route,
+      method,
+      response_status,
+    } = req.body;
 
     if (!projectID || !message) {
       res.status(400).json({ error: "projectID e message são obrigatórios" });
@@ -16,7 +24,10 @@ export class SendLogController {
       projectID,
       level,
       message,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(timestamp ? timestamp : Date.now()).toISOString(),
+      route,
+      method,
+      response_status: Number(response_status),
     };
 
     try {

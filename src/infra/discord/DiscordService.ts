@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { Log } from "../../domain/Log";
 import { projectChannelMap } from "../../projectMap";
+import { formatLogMessage } from "../../utils/formatLogMessage";
 
 export class DiscordService {
   private client: Client;
@@ -30,17 +31,8 @@ export class DiscordService {
       throw new Error(`Canal inválido ou não é de texto: ${channelId}`);
     }
 
-    const emoji =
-      {
-        info: "ℹ️",
-        warn: "⚠️",
-        error: "❌",
-        debug: "🐛",
-      }[log.level] || "";
+    let content = formatLogMessage(log)
 
-    const content = `${emoji} **[${log.projectID.toUpperCase()}] [${log.level.toUpperCase()}]**\n${
-      log.message
-    }`;
     await channel.send(content);
   }
 }
