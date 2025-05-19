@@ -55,6 +55,6 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker stop ${{ env.CONTAINER }} && docker rm ${{ env.CONTAINER }}"
       - name: Run new container
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -p ${{ env.PORT }}:${{ env.PORT }} -d --restart unless-stopped --name=${{ env.CONTAINER }} -e NODE_ENV=production -e DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }} -e SERENO_CHANNEL_ID=${{ secrets.SERENO_CHANNEL_ID }} -e UPSTASH_REDIS_REST_URL ${{ secrets.UPSTASH_REDIS_REST_URL }} -e UPSTASH_REDIS_REST_TOKEN ${{ secrets.UPSTASH_REDIS_REST_TOKEN }} ${REGISTRY}/${REPO}:latest"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -p ${{ env.PORT }}:${{ env.PORT }} -d --restart unless-stopped --name=${{ env.CONTAINER }} -e NODE_ENV=production -e DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }} -e UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }} -e UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }} ${REGISTRY}/${REPO}:latest"
       - name: Docker Logout
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker logout"
