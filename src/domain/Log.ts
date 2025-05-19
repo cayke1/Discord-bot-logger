@@ -10,6 +10,7 @@ export type METHOD =
 
 export interface Log {
   projectID: string;
+  projectName?: string;
   level: LogLevel;
   message: string;
   timestamp?: string;

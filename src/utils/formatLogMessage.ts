@@ -26,7 +26,7 @@ export function formatLogMessage(log: Log): string {
   const timestamp = formatTimestamp(log.timestamp);
 
   const header = `${emoji} **${log.level.toUpperCase()}** ${timestamp ? `| \`${timestamp}\`` : ''}`;
-  const projectLine = `📦 Projeto: \`${log.projectID}\``;
+  const projectLine = `📦 Projeto: \`${log.projectName}\``;
   const messageLine = `📝 Mensagem:\n> ${log.message}`;
 
   let routeBlock = '';

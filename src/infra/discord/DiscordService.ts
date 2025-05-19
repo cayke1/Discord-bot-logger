@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { Log } from "../../domain/Log";
-import { projectChannelMap } from "../../projectMap";
 import { formatLogMessage } from "../../utils/formatLogMessage";
+import { getProjectById } from "../../lib/projects";
 
 export class DiscordService {
   private client: Client;
@@ -22,7 +22,11 @@ export class DiscordService {
   }
 
   async sendLog(log: Log): Promise<void> {
-    const channelId = projectChannelMap[log.projectID];
+    const project = await getProjectById(log.projectID);
+    if (!project) {
+      throw new Error(`Projeto não encontrado: ${log.projectID}`);
+    }
+    const channelId = project.channelID;
     if (!channelId)
       throw new Error(`Canal não mapeado para o projeto: ${log.projectID}`);
 
@@ -31,7 +35,8 @@ export class DiscordService {
       throw new Error(`Canal inválido ou não é de texto: ${channelId}`);
     }
 
-    let content = formatLogMessage(log)
+    const logMessage = {...log, projectName: project.name};
+    let content = formatLogMessage(logMessage);
 
     await channel.send(content);
   }
