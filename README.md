@@ -130,8 +130,6 @@ POST /api/login -> 200
 - /domain: Entidades e regras de domínio
 - /infra: Implementações de infraestrutura (HTTP, Discord, Redis)
 - /utils: Utilitários e funções auxiliares
-## 📄 Licença
-Este projeto está licenciado sob a licença [ISC](LICENSE).
 ## 🤝 Contribuindo
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 <div align="center"> <sub>Feito com ❤️ para simplificar o monitoramento de aplicações</sub></div>
