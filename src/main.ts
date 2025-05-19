@@ -6,7 +6,6 @@ import { createServer } from "./infra/http/server";
 async function bootstrap() {
   const discordService = new DiscordService();
   await discordService.start(env.discordToken);
-  console.log(env);
   const usecase = new SendLogToDiscord(discordService);
   const app = createServer(usecase);
   app.listen(env.port, () => {
