@@ -1,4 +1,3 @@
-
 # Discord Log Bot
 <div align="center">
 
@@ -13,123 +12,139 @@
   <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" />
 </div>
 
+*[Versão em Português](README.pt.md)*
 
-## 📝 Sobre
-Discord Log Bot é uma aplicação que permite enviar logs de diferentes projetos para canais específicos no Discord. Perfeito para equipes que desejam centralizar seus logs em um só lugar, com visualização em tempo real através do Discord.
+## 📝 About
+Discord Log Bot is an application that allows you to send logs from different projects to specific Discord channels. Perfect for teams who want to centralize their logs in one place, with real-time visualization through Discord.
 
-## ✨ Recursos
-- **Gerenciamento de Projetos**: Crie e gerencie projetos com canais específicos no Discord
-- **API para Envio de Logs**: Envie logs facilmente de qualquer aplicação via HTTP
-- **Níveis de Log**: Suporte para diferentes níveis (info, warn, error, debug)
-- **Formatação Rica**: Logs formatados de forma clara e visualmente rica no Discord
-- **Informações de Rota**: Inclui detalhes de método HTTP, rota e status de resposta
-- **Armazenamento Persistente**: Usa Redis para armazenar configurações de projetos
-## 🚀 Instalação
-### Pré-requisitos
+## ✨ Features
+- **Project Management**: Create and manage projects with specific Discord channels
+- **API for Sending Logs**: Easily send logs from any application via HTTP
+- **Log Levels**: Support for different levels (info, warn, error, debug)
+- **Rich Formatting**: Logs formatted clearly and visually rich in Discord
+- **Route Information**: Includes details of HTTP method, route, and response status
+- **Persistent Storage**: Uses Redis to store project configurations
+
+## 🚀 Installation
+### Prerequisites
 - Node.js 18+
-- Um bot do Discord com token
-- Conta no Upstash Redis (ou outro Redis)
-### Instalação Local
+- A Discord bot with token
+- Upstash Redis account (or other Redis)
+
+### Local Installation
 
 ```bash
-# Clonar o repositório
-git clone https://github.com/seu-usuario/discord-log-bot.git
+# Clone the repository
+git clone https://github.com/your-username/discord-log-bot.git
 cd discord-log-bot
 
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Configurar variáveis de ambiente
+# Configure environment variables
 cp .env.example .env
-# Edite o arquivo .env com suas credenciais
+# Edit the .env file with your credentials
 
-# Iniciar em modo de desenvolvimento
+# Start in development mode
 npm run dev
 
-# Para build de produção
+# For production build
 npm run build
 ```
+
 ### Docker
 
 ```bash
-# Construir a imagem
+# Build the image
 docker build -t discord-log-bot .
 
-# Executar o container
+# Run the container
 docker run -p 3005:3005 \
-  -e DISCORD_BOT_TOKEN=seu_token \
-  -e UPSTASH_REDIS_REST_URL=sua_url \
-  -e UPSTASH_REDIS_REST_TOKEN=seu_token \
+  -e DISCORD_BOT_TOKEN=your_token \
+  -e UPSTASH_REDIS_REST_URL=your_url \
+  -e UPSTASH_REDIS_REST_TOKEN=your_token \
   discord-log-bot
 ```
-## ⚙️ Configuração
-Crie um arquivo `.env` com as seguintes variáveis:
+
+## ⚙️ Configuration
+Create a `.env` file with the following variables:
 ```bash
-DISCORD_BOT_TOKEN=seu_token_do_bot
+DISCORD_BOT_TOKEN=your_bot_token
 PORT=3005
-UPSTASH_REDIS_REST_URL=url_do_redis
-UPSTASH_REDIS_REST_TOKEN=token_do_redis
+UPSTASH_REDIS_REST_URL=redis_url
+UPSTASH_REDIS_REST_TOKEN=redis_token
 ```
-## 📚 API de Uso
-### Enviar Log
+
+## 📚 API Usage
+### Send Log
 
 ```bash
 curl -X POST http://localhost:3005/logs \
   -H "Content-Type: application/json" \
   -d '{
-    "projectID": "id-do-projeto",
+    "projectID": "project-id",
     "level": "info",
-    "message": "Teste de log",
+    "message": "Log test",
     "route": "/api/users",
     "method": "GET",
     "response_status": 200
   }'
 ```
-### Gerenciar Projetos
-#### Criar Projeto
+
+### Manage Projects
+#### Create Project
 ```bash
 curl -X POST http://localhost:3005/projects \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Meu Projeto",
-    "channelID": "id-do-canal-discord"
+    "name": "My Project",
+    "channelID": "discord-channel-id"
   }'
 ```
-#### Listar Projetos
+
+#### List Projects
 ```bash
 curl -X GET http://localhost:3005/projects
 ```
-#### Obter Projeto
-```bash
-curl -X GET http://localhost:3005/projects/id-do-projeto
-```
-#### Excluir Projeto
-```bash
-curl -X DELETE http://localhost:3005/projects/id-do-projeto
-```
-## 📊 Exemplos de Logs
-Os logs no Discord serão formatados da seguinte maneira:
-```bash
-🔵 INFO | `17/10/2023, 15:30:45`
 
-📦 Projeto: `Meu Projeto`
+#### Get Project
+```bash
+curl -X GET http://localhost:3005/projects/project-id
+```
 
-📝 Mensagem:
-> Usuário autenticado com sucesso
+#### Delete Project
+```bash
+curl -X DELETE http://localhost:3005/projects/project-id
+```
+
+## 📊 Log Examples
+Logs in Discord will be formatted as follows:
+```bash
+🔵 INFO | `10/17/2023, 15:30:45`
+
+📦 Project: `My Project`
+
+📝 Message:
+> User authenticated successfully
 
 
 POST /api/login -> 200
-
 ```
-## 🔄 CI/CDO projeto inclui GitHub Actions para CI/CD automatizado:
-- Construção da imagem Docker
-- Push para o Docker Hub
-- Deploy automático para VPS quando há push na branch main
-## 📋 ArquiteturaO projeto segue princípios de Clean Architecture:
-- /app: Casos de uso da aplicação
-- /domain: Entidades e regras de domínio
-- /infra: Implementações de infraestrutura (HTTP, Discord, Redis)
-- /utils: Utilitários e funções auxiliares
-## 🤝 Contribuindo
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
-<div align="center"> <sub>Feito com ❤️ para simplificar o monitoramento de aplicações</sub></div>
+
+## 🔄 CI/CD
+The project includes GitHub Actions for automated CI/CD:
+- Building the Docker image
+- Push to Docker Hub
+- Automatic deployment to VPS when pushing to the main branch
+
+## 📋 Architecture
+The project follows Clean Architecture principles:
+- /app: Application use cases
+- /domain: Domain entities and rules
+- /infra: Infrastructure implementations (HTTP, Discord, Redis)
+- /utils: Utilities and helper functions
+
+## 🤝 Contributing
+Contributions are welcome! Feel free to open issues and pull requests.
+
+<div align="center"> <sub>Made with ❤️ to simplify application monitoring</sub></div>
